@@ -43,7 +43,7 @@ services:
 
   nodejs:
     image: node:14.14
-    container_name: frond-end 
+    container_name: front-end 
     stdin_open: true
     tty: true 
     ports:

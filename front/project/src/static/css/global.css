@@ -1,0 +1,26 @@
+@font-face {
+	font-family: "Poppins-Medium";
+	src: url('../font/Poppins/Poppins-Medium.ttf');
+}
+
+#IMG_POST_IT_PROJECT_LOGO {
+  height: 3rem;
+  padding:5px;
+  background-color: white;
+  margin-right: 1rem;
+}
+
+.navbar a.nav-link, a.navbar-brand {
+  color: white !important;
+  /* text-transform: uppercase; */
+  font-family: "Poppins-Medium";
+
+  padding: 0 18rem;
+}
+.navbar a.nav-link:hover {
+  text-decoration: underline;
+}
+
+.page-content {
+  min-height: calc(100vh - 6rem);
+}
