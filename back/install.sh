@@ -5,30 +5,6 @@ chmod -R 777 /var/www/html
 echo "COMPOSER INSTALL"
 composer install
 chmod -R 777 /var/www/html
-rm -r /var/cache/*
-rm -r /var/log/*
-echo "CREATE DATABASE"
-cd /var/www/html
-php bin/console d:d:c
-chmod -R 777 /var/www/html
-echo "CREATE USER TABLE"
-php bin/console d:s:u --force
-chmod -R 777 /var/www/html
-echo "CREATE USER IN USER TABLE"
-php bin/console user:create admin@yopmail.com password
-chmod -R 777 /var/www/html
-echo "INSTALL JWT"
-composer require jwt-auth
-chmod -R 777 /var/www/html
-echo "GENERATE KEYS JWT"
-sh /app/JWT_generate_keys.sh
-chmod -R 777 /var/www/html
-echo "CHANGE SECURITE FOR JWT"
-cd /var/www/html/config/packages
-chmod -R 777 /var/www/html
-mv security.yaml security.yaml.back
-cp security.yaml.jwt security.yaml
-chmod -R 777 /var/www/html
 echo "RUN SERVER BACK"
 cd /var/www/html
 php -S 0.0.0.0:8000 -t public
