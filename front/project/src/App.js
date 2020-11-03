@@ -12,6 +12,7 @@ import {GlobalNav} from './components/global/GlobalNav'
 import {Footer} from './components/global/Footer'
 import {Connexion} from './components/global/Connexion/Connexion'
 import Logout from './components/global/Logout/Logout'
+import Register from './components/global/Register/Register'
 import JoinProject from './components/global/JoinProject'
 
 // services
@@ -91,12 +92,15 @@ export default class App extends React.Component {
               <p>{'Je suis disponible'}</p>
             </Route>
             <Route path="/connexion">
-              <p>{'Connexion'}</p>
               <Connexion isConnectedUpdate={this.isConnectedUpdate} />
             </Route>
             <Route path="/logout">
               {/* {this.logout()} */}
               <Logout isConnectedUpdate={this.isConnectedUpdate} />  
+            </Route>
+            <Route path="/inscription">
+              {/* {this.logout()} */}
+              <Register isConnectedUpdate={this.isConnectedUpdate} />  
             </Route>
           </Switch>
         </div>

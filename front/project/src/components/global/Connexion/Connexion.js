@@ -82,6 +82,7 @@ export class Connexion extends React.Component {
                             <Row className="justify-content-md-center" >
                                 <Col xs="5">
                                     <Form onSubmit={this.submitedConnexion}>
+                                        <h1>Connexion</h1>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label>Adresse e-mail</Form.Label>
                                             <Form.Control type="email" placeholder="Enter email" onChange={this.onChangeEmail} />

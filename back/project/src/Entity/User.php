@@ -2,12 +2,19 @@
 
 namespace App\Entity;
 
+
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * 
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * 
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"user" = "User", "person" = "Person" })
  */
 class User implements UserInterface
 {
