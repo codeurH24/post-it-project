@@ -14,6 +14,7 @@ import {Connexion} from './components/global/Connexion/Connexion'
 import Logout from './components/global/Logout/Logout'
 import Register from './components/global/Register/Register'
 import JoinProject from './components/global/JoinProject'
+import CreateProject from './components/global/Project/CreateProject'
 
 // services
 import {Auth} from './services/Auth'
@@ -86,7 +87,7 @@ export default class App extends React.Component {
               <JoinProject isConnected={()=>this.state.isConnected} />
             </Route>
             <Route path="/publier-mon-project">
-              <p>{'Publier mon project'}</p>
+              <CreateProject isConnected={()=>this.state.isConnected} />
             </Route>
             <Route path="/je-suis-disponible">
               <p>{'Je suis disponible'}</p>

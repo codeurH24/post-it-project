@@ -7,8 +7,9 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
-
+use Symfony\Component\Serializer\Annotation\SerializedName;
 /**
+ * @ApiResource()
  * 
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * 
@@ -23,7 +24,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -40,6 +41,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @SerializedName("password")
+     */
+    private $plainPassword;
 
     public function getId(): ?int
     {
@@ -117,5 +123,12 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function setPlainPassword($plainPassword) {
+        $this->plainPassword = $plainPassword;
+    }
+    public function getPlainPassword() {
+        return $this->plainPassword;
     }
 }

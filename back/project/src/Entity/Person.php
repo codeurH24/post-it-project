@@ -5,22 +5,47 @@ namespace App\Entity;
 use App\Entity\User;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PersonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+/*
+{
+  "pseudo": "string",
+  "birthdayAt": "2020-11-04T21:14:59.988Z",
+  "website": "string",
+  "email": "string",
+  "username": "string",
+  "roles": [
+    "string"
+  ],
+  "password": "string"
+}
+{
+  "pseudo": "Charle",
+  "birthdayAt": "2020-11-04T21:14:59.988Z",
+  "website": "string",
+  "email": "user@yopmail.com",
+  "username": "string",
+  "roles": [
+    "ROLE_USER"
+  ],
+  "password": "password"
+}
+*/
 /**
- * @ApiResource()
- * #@ApiResource(shortName="persons")
+ * #@ApiResource()
+ * @ApiResource(shortName="persons", iri="http://schema.org/Book")
  * @ORM\Entity(repositoryClass=PersonRepository::class)
  * 
  */
 class Person extends User
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    // /**
+    //  * @ORM\Id
+    //  * @ORM\GeneratedValue
+    //  * @ORM\Column(type="integer")
+    //  */
+    // private $id;
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -36,6 +61,16 @@ class Person extends User
      * @ORM\Column(type="string", length=180, nullable=true)
      */
     private $website;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $projects;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
 
     // public function getId(): ?int
     // {
@@ -74,6 +109,36 @@ class Person extends User
     public function setWebsite(?string $website): self
     {
         $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getUser() === $this) {
+                $project->setUser(null);
+            }
+        }
 
         return $this;
     }

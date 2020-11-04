@@ -1,6 +1,6 @@
 import React from 'react'
 import { 
-    Button, Form, Container, Col, Row
+    Button, Form, Container, Col, Row, Alert
 } from 'react-bootstrap'
 
 import {Popup} from "../Modal/Popup"
@@ -17,7 +17,8 @@ export class Connexion extends React.Component {
         this.state = {
             username:null,
             password:null,
-            isConnected: false
+            isConnected: false,
+            error: null
         }
     }
 
@@ -45,12 +46,16 @@ export class Connexion extends React.Component {
                     }));
                     this.props.isConnectedUpdate(true);
                     this.setState({
-                        isConnected: true
+                        isConnected: true,
+                        error: null
                     })
                 })
             } else {
                 if(resp.status === 401) {
-                    console.log('Les identifiants sont incorrectes')
+                    console.log('Les identifiants sont incorrectes');
+                    this.setState({
+                        error: 'Les identifiants sont incorrectes'
+                    })
                 }
             }
         })
@@ -102,6 +107,10 @@ export class Connexion extends React.Component {
                                             <Button variant="primary" type="submit">
                                                 Connexion
                                             </Button>
+                                            
+                                            {this.state.error && <Alert variant={'danger'}>
+                                            {this.state.error ? this.state.error : 'aucune erreur'}
+                                            </Alert>}
                                         </div>
                                     </Form>
                                 {/* test */}

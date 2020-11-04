@@ -28,7 +28,7 @@ services:
       - app_net
 
   apache2-php:
-    image: super/hero
+    build: ./_build-php-image
     container_name: back-end
     ports:
       - 8888:8000
