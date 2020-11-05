@@ -23,11 +23,11 @@ export default class CreateProject extends React.Component {
 
         const formData = new FormData();
         formData.append('title', "string");
-        formData.append('updatedAt', "string");
+        // formData.append('updatedAt', "string");
         formData.append('published', true);
         formData.append('description', "string");
-        formData.append('user', "string");
-        formData.append('createdAt', "2020-11-03T22:59:46.952Z");
+        // formData.append('user', "string");
+        // formData.append('createdAt', "2020-11-03T22:59:46.952Z");
 
         const url = `http://localhost:8888/api/projects`;
         const header = {
@@ -39,11 +39,8 @@ export default class CreateProject extends React.Component {
             },
             body: JSON.stringify({
                 "title": "string",
-                "updatedAt": "2020-11-03T22:59:46.952Z",
                 "published": true,
-                "description": "string",
-                "user": "string",
-                "createdAt": "2020-11-03T22:59:46.952Z"
+                "description": "string"
             })
         }
 

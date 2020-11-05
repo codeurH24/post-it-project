@@ -4,6 +4,8 @@ import {
 } from 'react-bootstrap'
 
 import {Popup} from "../Modal/Popup"
+import {Redirect} from "react-router-dom"
+import {Auth} from '../../../services/Auth'
 
 // statics files (official)
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,10 +16,13 @@ export class Connexion extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const auth = new Auth();
+
         this.state = {
             username:null,
             password:null,
-            isConnected: false,
+            isConnected: auth.isConnected(),
             error: null
         }
     }
@@ -119,13 +124,14 @@ export class Connexion extends React.Component {
                         </Container>
                     </div>
                     :
-                    <Popup title={() => "Information"} content={() => {
-                        return (
-                            <p>
-                                Vous etes maintenant connecté
-                            </p>
-                        )
-                    }} />    
+                    <Redirect to='/tableau-de-bord' />
+                    // <Popup title={() => "Information"} content={() => {
+                    //     return (
+                    //         <p>
+                    //             Vous etes maintenant connecté
+                    //         </p>
+                    //     )
+                    // }} />    
                 }
             </div>
         )

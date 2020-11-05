@@ -42,6 +42,13 @@ export class GlobalNav extends React.Component {
                         </li>
                         <li className="nav-item active">
                             {this.props.isConnected() ? 
+                                <Link className="nav-link" to="/tableau-de-bord">Tableau de bord</Link>
+                                :
+                                ''
+                            }
+                        </li>
+                        <li className="nav-item active">
+                            {this.props.isConnected() ? 
                                 <Link className="nav-link" to="/logout">Déconnexion</Link>
                                 :
                                 <Link className="nav-link" to="/connexion">Connexion</Link>

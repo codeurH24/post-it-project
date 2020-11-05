@@ -11,6 +11,7 @@ import {
 import {GlobalNav} from './components/global/GlobalNav'
 import {Footer} from './components/global/Footer'
 import {Connexion} from './components/global/Connexion/Connexion'
+import {Dashboard} from './components/global/Dashboard/Dashboard'
 import Logout from './components/global/Logout/Logout'
 import Register from './components/global/Register/Register'
 import JoinProject from './components/global/JoinProject'
@@ -102,6 +103,9 @@ export default class App extends React.Component {
             <Route path="/inscription">
               {/* {this.logout()} */}
               <Register isConnectedUpdate={this.isConnectedUpdate} />  
+            </Route>
+            <Route path="/tableau-de-bord">
+              <Dashboard isConnected={()=>this.state.isConnected} />  
             </Route>
           </Switch>
         </div>
