@@ -3,6 +3,8 @@ import {
     Table, Container, Col, Row
 } from 'react-bootstrap'
 
+import { BsFillTrashFill } from "react-icons/bs";
+import { BiEdit } from "react-icons/bi";
 
 // statics files (official)
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -47,6 +49,14 @@ export class Dashboard extends React.Component {
         })
     }
 
+    date = (elm) => {
+        return (new Date(elm.createdAt).toLocaleDateString())
+    }
+
+    actionTrash = () => {
+        console.log('action trash')
+    }
+
     
     render() {
         return (
@@ -54,8 +64,9 @@ export class Dashboard extends React.Component {
                 <Container>
                     <Row>
                         <Col>
-                            <h1>Dashboard</h1>
-
+                            <h1 style={{marginBottom:'2rem'}}>Tableau de bord</h1>
+                            
+                            <h2>Liste des projets</h2>
                             <Table striped bordered hover variant="dark">
                                 <thead>
                                     <tr>
@@ -68,9 +79,12 @@ export class Dashboard extends React.Component {
                                     {
                                         this.state.projets && this.state.projets.map((elm,key)=> (
                                             <tr key={key}>
-                                                <td>{elm.createdAt}</td>
+                                                <td>{this.date(elm)}</td>
                                                 <td>{elm.title}</td>
-                                                <td></td>
+                                                <td>
+                                                    <BiEdit style={{fontSize:'1.6rem', color:'#57d376'}} />
+                                                    <BsFillTrashFill onClick={this.actionTrash} style={{fontSize:'1.2rem', color:'#ff6e6e'}} />
+                                                </td>
                                             </tr>
                                         ))
                                     }
