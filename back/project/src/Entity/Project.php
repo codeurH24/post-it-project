@@ -3,12 +3,20 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
+
+use App\Validator\Constraints\MinimalPropertiesValidator;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
+ * #@ApiFilter(SearchFilter::class, properties={"title": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
  */
 class Project
 {
@@ -42,6 +50,9 @@ class Project
     /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="projects")
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * 
+     * @ORM\Column(type="integer", name="user_id")
      */
     private $user;
 
@@ -103,7 +114,7 @@ class Project
         return $this;
     }
 
-    public function getUser(): ?Person
+    public function getUser()
     {
         return $this->user;
     }

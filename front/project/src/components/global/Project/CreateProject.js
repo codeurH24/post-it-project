@@ -10,7 +10,9 @@ export default class CreateProject extends React.Component {
     constructor() {
         super()
         this.state = {
-            isCreated: false
+            isCreated: false,
+            title: null,
+            description: null
         }
 
     }
@@ -38,9 +40,9 @@ export default class CreateProject extends React.Component {
               'Authorization': 'Bearer ' +  JSON.parse(localStorage.getItem('user')).token
             },
             body: JSON.stringify({
-                "title": "string",
+                "title": this.state.title,
                 "published": true,
-                "description": "string"
+                "description": this.state.description
             })
         }
 
@@ -68,6 +70,66 @@ export default class CreateProject extends React.Component {
         })
     }
 
+    onChangeTitle = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+
+        this.setState({
+            title: e.currentTarget.value
+        })
+
+    }
+
+    onChangeDescription = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+
+        this.setState({
+            description: e.currentTarget.value
+        })
+
+    }
+
+    ProjectFilterTest = () => {
+        console.log('click ProjectFilterTest')
+
+        const url = `http://localhost:8888/api/projects?user=14`;
+        const header = {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' +  JSON.parse(localStorage.getItem('user')).token
+            }
+        }
+
+        console.log('fetch', url, header);
+
+        fetch(url,header)
+        .then(resp => {
+            console.log('resp', resp)
+            if(resp.ok) {
+                resp.json().then(json => {
+                    console.log('json', json);
+                    
+                })
+            } else {
+                if(resp.status === 401) {
+                    console.log('Non autorisé');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('SERVER IS DOWN');
+            console.error(error);
+        })
+
+
+
+    }
+
     render() {
 
         return (
@@ -78,17 +140,17 @@ export default class CreateProject extends React.Component {
                         <Container>
                             <Row className="justify-content-md-center" >
                                 <Col xs="12">
-                                    
+                                    <button onClick={this.ProjectFilterTest}>TEST</button>
                                     <Form onSubmit={this.submitedForm}>
                                         <h1>Publier mon project</h1>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label>Titre</Form.Label>
-                                            <Form.Control type="text" placeholder="Entrer un titre" onChange={this.onChangePseudo} />
+                                            <Form.Control type="text" placeholder="Entrer un titre" onChange={this.onChangeTitle} />
                                         </Form.Group>
                                         
                                         <Form.Group controlId="exampleForm.ControlTextarea1">
                                             <Form.Label>Description du projet</Form.Label>
-                                            <Form.Control as="textarea" rows={3} />
+                                            <Form.Control as="textarea" rows={3} onChange={this.onChangeDescription}  />
                                         </Form.Group>
 
                                         <div style={{textAlign:'center'}}>

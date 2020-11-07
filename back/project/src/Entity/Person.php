@@ -34,7 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
 */
 /**
  * #@ApiResource()
- * @ApiResource(shortName="persons", iri="http://schema.org/Book")
+ * @ApiResource(shortName="persons", iri="http://schema.org/Person")
  * @ORM\Entity(repositoryClass=PersonRepository::class)
  * 
  */
@@ -45,7 +45,7 @@ class Person extends User
     //  * @ORM\GeneratedValue
     //  * @ORM\Column(type="integer")
     //  */
-    // private $id;
+    // protected $id;
 
     /**
      * @ORM\Column(type="string", length=180)

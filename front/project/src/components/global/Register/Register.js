@@ -19,9 +19,10 @@ export default class Register extends React.Component {
       this.props.isConnectedUpdate(false);
 
       this.state = {
-          username:null,
-          password:null,
-          isConnected: false
+            username:null,
+            pseudo:null,
+            password:null,
+            isConnected: false
       }
 
     }
@@ -29,7 +30,80 @@ export default class Register extends React.Component {
     submitedRegister = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log('register submited')
+      console.log('register submited');
+
+      const url = `http://localhost:8888/api/persons`;
+      const header = {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "pseudo": this.state.pseudo,
+            "birthdayAt": "2020-11-07T07:03:17.501Z",
+            "email": this.state.username,
+            "password": this.state.password
+          })
+      }
+
+      console.log('fetch', url, header);
+
+      fetch(url,header)
+      .then(resp => {
+          console.log('resp', resp)
+          if(resp.ok) {
+              resp.json().then(json => {
+                  console.log('json', json);
+                  this.setState({
+                    isConnected: true
+                  })
+              })
+          } else {
+              if(resp.status === 401) {
+                  console.log('Non autorisé');
+              }
+          }
+      })
+      .catch(error => {
+          console.error('SERVER IS DOWN');
+          console.error(error);
+      })
+
+
+
+    }
+
+    onChangeEmail = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const value = e.currentTarget.value;
+        console.log('email', value)
+        this.setState({
+            username: value
+        });
+    }
+    onChangePseudo = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const value = e.currentTarget.value;
+        console.log('pseudo', value)
+        this.setState({
+            pseudo: value
+        });
+    }
+
+    onChangePassword = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const value = e.currentTarget.value;
+        console.log('password', value)
+        this.setState({
+            password: value
+        });
     }
    
     render() {
@@ -87,7 +161,7 @@ export default class Register extends React.Component {
                   <Popup title={() => "Information"} content={() => {
                       return (
                           <p>
-                              Vous etes maintenant connecté
+                              Vous pouvez maintenant vous connecter
                           </p>
                       )
                   }} />    

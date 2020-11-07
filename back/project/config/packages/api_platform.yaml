@@ -10,3 +10,7 @@ api_platform:
                 name: Authorization
                 type: header
 
+    graphql:
+        graphiql:
+            enabled: true
+        nesting_separator: _

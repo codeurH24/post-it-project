@@ -52,6 +52,7 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
             );
 
             $data->eraseCredentials();
+            $data->setRoles(['ROLE_USER']);
         }
         $this->logger->info('TEST TEST ' . serialize($data->getPassword()));
         $this->_entityManager->persist($data);
