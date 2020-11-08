@@ -91,44 +91,7 @@ export default class CreateProject extends React.Component {
         })
 
     }
-
-    ProjectFilterTest = () => {
-        console.log('click ProjectFilterTest')
-
-        const url = `http://localhost:8888/api/projects?user=14`;
-        const header = {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' +  JSON.parse(localStorage.getItem('user')).token
-            }
-        }
-
-        console.log('fetch', url, header);
-
-        fetch(url,header)
-        .then(resp => {
-            console.log('resp', resp)
-            if(resp.ok) {
-                resp.json().then(json => {
-                    console.log('json', json);
-                    
-                })
-            } else {
-                if(resp.status === 401) {
-                    console.log('Non autorisé');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('SERVER IS DOWN');
-            console.error(error);
-        })
-
-
-
-    }
+    
 
     render() {
 
@@ -140,7 +103,6 @@ export default class CreateProject extends React.Component {
                         <Container>
                             <Row className="justify-content-md-center" >
                                 <Col xs="12">
-                                    <button onClick={this.ProjectFilterTest}>TEST</button>
                                     <Form onSubmit={this.submitedForm}>
                                         <h1>Publier mon project</h1>
                                         <Form.Group controlId="formBasicEmail">
