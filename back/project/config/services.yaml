@@ -34,3 +34,10 @@ services:
     App\DataPersister\UserDataPersister: ~
         # Uncomment only if autoconfiguration is disabled
         tags: [ 'api_platform.data_persister' ]
+
+    # ...
+    'App\EventListener\UserFilterConfigurator':
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 5 }
+        # Autoconfiguration must be disabled to set a custom priority
+        autoconfigure: false

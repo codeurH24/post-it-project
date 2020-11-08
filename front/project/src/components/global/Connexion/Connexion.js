@@ -51,7 +51,7 @@ export class Connexion extends React.Component {
                     }));
                     this.props.isConnectedUpdate(true);
                     this.setState({
-                        isConnected: true,
+                        isConnected: false,
                         error: null
                     })
                 })

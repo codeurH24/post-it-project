@@ -8,4 +8,8 @@ export class Auth {
 
         return isConnected
     }
+
+    connexion = () => {
+        
+    }
 }

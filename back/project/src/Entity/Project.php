@@ -12,11 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 use App\Validator\Constraints\MinimalPropertiesValidator;
 
+use App\Annotation\UserAware;
+
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
- * #@ApiFilter(SearchFilter::class, properties={"title": "partial"})
  * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
+ * @UserAware(userFieldName="user_id")
  */
 class Project
 {
@@ -49,8 +51,7 @@ class Project
 
     /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="projects")
-     * @ORM\JoinColumn(nullable=false)
-     * 
+     * @ORM\JoinColumn(nullable=false, name="user_id", referencedColumnName="id")
      * 
      * @ORM\Column(type="integer", name="user_id")
      */

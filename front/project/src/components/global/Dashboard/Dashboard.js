@@ -20,7 +20,7 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        fetch(`http://localhost:8888/api/projects?user=14`,{
+        fetch(`http://localhost:8888/api/projects`,{
             method: 'GET',
             headers: {
               'Accept': 'application/json',

@@ -14,3 +14,10 @@ api_platform:
         graphiql:
             enabled: true
         nesting_separator: _
+
+
+doctrine:
+    orm:
+        filters:
+            user_filter:
+                class: App\Filter\UserFilter

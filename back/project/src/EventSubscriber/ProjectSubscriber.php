@@ -48,19 +48,19 @@ class ProjectSubscriber implements EventSubscriberInterface
     
         if ($this->httpCall($event, 'GET', '/api/projects')) {
             
-            $user = $this->getUser();
+            // $user = $this->getUser();
     
-            $param = $event->getRequest()->query->all();
+            // $param = $event->getRequest()->query->all();
             
-            $this->logger->debug('TEST TEST  mon id ' . $user->getId()  );
-            if(isset($param['user'])) {
-                if($param['user'] != $user->getId()) {
-                    $this->logger->debug('TEST TEST  user id param different: $param[user] ' . $param['user']  );
-                    $event->getControllerResult();
-                    $response = new Response();
-                    $event->setResponse(new JsonResponse([], Response::HTTP_BAD_REQUEST));
-                }
-            }
+            // $this->logger->debug('TEST TEST  mon id ' . $user->getId()  );
+            // if(isset($param['user'])) {
+            //     if($param['user'] != $user->getId()) {
+            //         $this->logger->debug('TEST TEST  user id param different: $param[user] ' . $param['user']  );
+            //         $event->getControllerResult();
+            //         $response = new Response();
+            //         $event->setResponse(new JsonResponse(['message' => 'user != param user id'], Response::HTTP_BAD_REQUEST));
+            //     }
+            // }
         }
 
     }
@@ -83,22 +83,24 @@ class ProjectSubscriber implements EventSubscriberInterface
     {
         
         
-        // if ($this->httpCall($event, 'GET', '/api/projects')) {
+        if ($this->httpCall($event, 'GET', '/api/projects')) {
 
-        //     // $this->logger->info("TEST TEST /api/projects  ");
-        //     // $namedArguments = $event->getRequest()->attributes->all();
-        //     $user = $this->getUser();
+            // $this->logger->info("TEST TEST /api/projects  ");
+            // $namedArguments = $event->getRequest()->attributes->all();
+            $user = $this->getUser();
     
-        //     $param = $event->getRequest()->query->all();
+            $param = $event->getRequest()->query->all();
             
-        //     $this->logger->debug('TEST TEST  mon id ' . $user->getId()  );
-        //     if(isset($param['user'])) {
-        //         if($param['user'] != $user->getId()) {
-        //             $this->logger->debug('TEST TEST  user id param different: $param[user] ' . $param['user']  );
-        //             // $event->setResponse(new JsonResponse(null, 204));
-        //         }
-        //     }
-        // }
+            $this->logger->debug('TEST TEST  mon id ' . $user->getId()  );
+            if(isset($param['user'])) {
+                if($param['user'] != $user->getId()) {
+                    $this->logger->debug('TEST TEST hasFilter  user id param different: $param[user] ' . $param['user']  );
+                    // $event->setResponse(new JsonResponse(null, 204));
+                    $event->getRequest()->query->set('user', $user->getId());
+                    return $event;
+                }
+            }
+        }
 
         
 
