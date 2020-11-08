@@ -24,3 +24,12 @@
 .page-content {
   min-height: calc(100vh - 6rem);
 }
+
+
+
+
+/* @media screen and (min-width: 200px) and (max-width: 1600px) {
+  #newMenu div div > ul {
+    flex-direction: column;
+  }
+} */

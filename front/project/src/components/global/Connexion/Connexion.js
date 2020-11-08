@@ -3,7 +3,7 @@ import {
     Button, Form, Container, Col, Row, Alert
 } from 'react-bootstrap'
 
-import {Popup} from "../Modal/Popup"
+// import {Popup} from "../Modal/Popup"
 import {Redirect} from "react-router-dom"
 import {Auth} from '../../../services/Auth'
 
@@ -51,7 +51,7 @@ export class Connexion extends React.Component {
                     }));
                     this.props.isConnectedUpdate(true);
                     this.setState({
-                        isConnected: false,
+                        isConnected: true,
                         error: null
                     })
                 })

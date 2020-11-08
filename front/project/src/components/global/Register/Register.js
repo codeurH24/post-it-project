@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap'
 
 import {Popup} from "../Modal/Popup"
+import * as person from '../../../services/api-rest/Person'
 
 // statics files (official)
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,50 +28,66 @@ export default class Register extends React.Component {
 
     }
 
-    submitedRegister = (e) => {
+    submitedRegister = async (e) => {
       e.preventDefault();
       e.stopPropagation();
       console.log('register submited');
 
-      const url = `http://localhost:8888/api/persons`;
-      const header = {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            "pseudo": this.state.pseudo,
-            "birthdayAt": "2020-11-07T07:03:17.501Z",
-            "email": this.state.username,
-            "password": this.state.password
-          })
-      }
+        //   const url = `http://localhost:8888/api/persons`;
+        //   const header = {
+        //       method: 'POST',
+        //       headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //       },
+        //       body: JSON.stringify({
+        //         "pseudo": this.state.pseudo,
+        //         "birthdayAt": "2020-11-07T07:03:17.501Z",
+        //         "email": this.state.username,
+        //         "password": this.state.password
+        //       })
+        //   }
 
-      console.log('fetch', url, header);
+        //   console.log('fetch', url, header);
 
-      fetch(url,header)
-      .then(resp => {
-          console.log('resp', resp)
-          if(resp.ok) {
-              resp.json().then(json => {
-                  console.log('json', json);
-                  this.setState({
+        //   fetch(url,header)
+        //   .then(resp => {
+        //       console.log('resp', resp)
+        //       if(resp.ok) {
+        //           resp.json().then(json => {
+        //               console.log('json', json);
+        //               this.setState({
+        //                 isConnected: true
+        //               })
+        //           })
+        //       } else {
+        //           if(resp.status === 401) {
+        //               console.log('Non autorisé');
+        //           }
+        //       }
+        //   })
+        //   .catch(error => {
+        //       console.error('SERVER IS DOWN');
+        //       console.error(error);
+        //   })
+
+        const resp = await person.create({
+            body: JSON.stringify({
+                "pseudo": this.state.pseudo,
+                "birthdayAt": "2020-11-07T07:03:17.501Z",
+                "email": this.state.username,
+                "password": this.state.password
+            })
+        })
+
+        if(resp.ok) {
+            resp.json().then(json => {
+                console.log('json', json);
+                this.setState({
                     isConnected: true
-                  })
-              })
-          } else {
-              if(resp.status === 401) {
-                  console.log('Non autorisé');
-              }
-          }
-      })
-      .catch(error => {
-          console.error('SERVER IS DOWN');
-          console.error(error);
-      })
-
-
+                })
+            })
+        }
 
     }
 

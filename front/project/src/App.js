@@ -7,6 +7,8 @@ import {
   Redirect
 } from "react-router-dom";
 
+
+
 // homemade components 
 import {GlobalNav} from './components/global/GlobalNav'
 import {Footer} from './components/global/Footer'
@@ -26,6 +28,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // statics files (homemade)
 import './static/css/global.css';
+import './static/css/basic-theme.css';
 
 
 export default class App extends React.Component {
@@ -40,25 +43,7 @@ export default class App extends React.Component {
       isConnected:  auth.isConnected()
     }
   }
-
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log('App getDerivedStateFromProps', props, state)
-  //   return {favoritecolor: props.favcol };
-  // }
-  // componentDidMount() {
-  //   console.log('App componentDidMount');
-  // }
-  // getSnapshotBeforeUpdate() {
-  //   console.log('App getSnapshotBeforeUpdate()');
-  // }
-  // componentDidUpdate() {
-  //   console.log('App componentDidUpdate()');
-  // }
-
-  // shouldComponentUpdate() {
-  //   console.log('App shouldComponentUpdate()');
-  //   // return false;
-  // }
+  
 
   isConnectedUpdate = (value) => {
 
@@ -78,10 +63,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log('App render')
+    
     return (
       <Router>
         <GlobalNav isConnected={()=>this.state.isConnected} />
+        
         <div className="page-content">
           <Switch>
             <Route path="/rejoindre-un-projet">
@@ -106,6 +92,14 @@ export default class App extends React.Component {
             </Route>
             <Route path="/tableau-de-bord">
               <Dashboard isConnected={()=>this.state.isConnected} />  
+            </Route>
+            <Route path="/" exact={true}>
+              {
+                process.env.NODE_ENV === 'development' ?
+                  <h1>home DEV</h1>
+                  :
+                  <h1>Accueil</h1>
+              }  
             </Route>
           </Switch>
         </div>

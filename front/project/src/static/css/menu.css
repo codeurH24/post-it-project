@@ -1,0 +1,41 @@
+#newMenu div div > ul {
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #newMenu #logo-bar {
+    display: flex;
+    align-items: center;
+  }
+  #newMenu #logo-bar .col{
+    display: flex;
+    align-items: center;
+  }
+  #newMenu #tools-menu {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  #newMenu #open-menu {
+    display: none;
+    border: none;
+    height: fit-content;
+  }
+  
+  @media screen and (min-width: 0px) and (max-width: 940px) {
+    #newMenu div div > ul {
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: start;
+      justify-content: start;
+      display: none;
+    }
+    #newMenu div div > ul.open {
+      display: flex;
+    }
+    #newMenu #open-menu {
+      display: inline-block;
+    }
+  }

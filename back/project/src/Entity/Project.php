@@ -51,9 +51,8 @@ class Project
 
     /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="projects")
-     * @ORM\JoinColumn(nullable=false, name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=false)
      * 
-     * @ORM\Column(type="integer", name="user_id")
      */
     private $user;
 
@@ -115,7 +114,7 @@ class Project
         return $this;
     }
 
-    public function getUser()
+    public function getUser(): Person
     {
         return $this->user;
     }

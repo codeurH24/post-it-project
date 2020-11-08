@@ -2,9 +2,14 @@ import React from 'react'
 import { 
     Table, Container, Col, Row
 } from 'react-bootstrap'
+import {
+    Redirect
+} from "react-router-dom";
 
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
+
+import * as project from '../../../services/api-rest/Project';
 
 // statics files (official)
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,38 +20,47 @@ export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projets: null
+            projets: null,
+            redirectTo: null
+        }
+
+        
+    }
+
+    UNSAFE_componentWillMount() {
+        this.listProject();
+    }
+
+    listProject = async () => {
+        const resp = await project.list();
+
+        if(resp.ok) {
+            resp.json().then(json => {
+                console.log('json', json);
+                this.setState({
+                    projets: json
+                })
+            })
         }
     }
 
-    componentWillMount() {
-        fetch(`http://localhost:8888/api/projects`,{
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' +  JSON.parse(localStorage.getItem('user')).token
-            }
-        })
-        .then(resp => {
-            console.log('resp', resp)
+    onRemoveProject = async (id) => {
+
+        if (window.confirm("désirez Vous supprimer ?")) {
+            console.log("onRemoveProject id:", id);
+            const resp = await project.remove({id});
             if(resp.ok) {
-                resp.json().then(json => {
-                    console.log('json', json);
-                    this.setState({
-                        projets: json
-                    })
-                })
-            } else {
-                if(resp.status === 401) {
-                    console.log('401 Error');
+                if (resp.status === 204) {
+                    console.log('project #'+id+' vient d\'etre supprimer.');
+                    this.listProject();
+                } else {
+                    console.log('project #'+id+' erreur de suppression.');
                 }
             }
-        })
-        .catch(error => {
-            console.error('SERVER IS DOWN');
-            console.error(error);
-        })
+        }
+        
+        
+        
     }
 
     date = (elm) => {
@@ -57,10 +71,21 @@ export class Dashboard extends React.Component {
         console.log('action trash')
     }
 
+    renderRedirect = () => {
+        if (this.state.redirectTo) {
+          return <Redirect to={this.state.redirectTo} />
+        }
+    }
+
+    onUpdateProject = (id) => {
+        console.log('onUpdateProject', id)
+    }
+
     
     render() {
         return (
             <div className="" id="dashboard-page">
+                {this.renderRedirect()}
                 <Container>
                     <Row>
                         <Col>
@@ -81,9 +106,9 @@ export class Dashboard extends React.Component {
                                             <tr key={key}>
                                                 <td>{this.date(elm)}</td>
                                                 <td>{elm.title}</td>
-                                                <td>
-                                                    <BiEdit style={{fontSize:'1.6rem', color:'#57d376'}} />
-                                                    <BsFillTrashFill onClick={this.actionTrash} style={{fontSize:'1.2rem', color:'#ff6e6e'}} />
+                                                <td style={{textAlign:'right'}}>
+                                                    <BiEdit style={{fontSize:'1.6rem', color:'#57d376'}} onClick={() => {this.onUpdateProject(elm.id)}} />
+                                                    <BsFillTrashFill onClick={this.actionTrash} style={{fontSize:'1.2rem', color:'#ff6e6e'}} onClick={() => {this.onRemoveProject(elm.id)}} />
                                                 </td>
                                             </tr>
                                         ))

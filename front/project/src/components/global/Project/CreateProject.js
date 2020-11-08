@@ -5,6 +5,8 @@ import {
 
 import {Popup} from "../Modal/Popup"
 
+import * as project from '../../../services/api-rest/Project';
+
 export default class CreateProject extends React.Component {
 
     constructor() {
@@ -20,36 +22,17 @@ export default class CreateProject extends React.Component {
     submitedForm = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Create project submited')
-        console.log('Create project submited')
-
-        const formData = new FormData();
-        formData.append('title', "string");
-        // formData.append('updatedAt', "string");
-        formData.append('published', true);
-        formData.append('description', "string");
-        // formData.append('user', "string");
-        // formData.append('createdAt', "2020-11-03T22:59:46.952Z");
-
-        const url = `http://localhost:8888/api/projects`;
-        const header = {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' +  JSON.parse(localStorage.getItem('user')).token
-            },
-            body: JSON.stringify({
-                "title": this.state.title,
-                "published": true,
-                "description": this.state.description
+        console.log('Create project submited');
+        
+        (async () => {
+            const resp = await project.create({
+                body:JSON.stringify({
+                    "title": this.state.title,
+                    "published": true,
+                    "description": this.state.description
+                })
             })
-        }
-
-        console.log('fetch', url, header);
-
-        fetch(url,header)
-        .then(resp => {
+    
             console.log('resp', resp)
             if(resp.ok) {
                 resp.json().then(json => {
@@ -58,16 +41,8 @@ export default class CreateProject extends React.Component {
                         isCreated: true
                     })
                 })
-            } else {
-                if(resp.status === 401) {
-                    console.log('Non autorisé');
-                }
             }
-        })
-        .catch(error => {
-            console.error('SERVER IS DOWN');
-            console.error(error);
-        })
+        })()
     }
 
     onChangeTitle = (e) => {
